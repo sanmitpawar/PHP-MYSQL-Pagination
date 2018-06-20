@@ -9,7 +9,7 @@
 <body>
 
 
-	<div class="container">
+	<div class="container" style="margin-top: 4rem;">
 		<div class="row">
 			<?php if ($num_rows >= 1) {
 				$i = 0;
@@ -23,40 +23,23 @@
 				<?php }	
 			} ?>
 		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<?php if (isset($page)){ 
-					$result = mysqli_query($conn,"select count(*) As total from users");
-					$rows = mysqli_num_rows($result);
-					if ($rows) {
-						$rs = mysqli_fetch_assoc($result);
-						$total = $rs["total"];
-					}
-					$totalPages = ceil($total / $perpage);
-					if($page <=1 ){
-						echo "<span id='page_links' style='font-weight: bold;'>Prev</span>";
-					}else{
-						$j = $page - 1;
-						echo "<span><a id='page_a_link' href='index.php?page=$j'>< Prev</a></span>";
-					}
-					for($i=1; $i <= $totalPages; $i++)
-					{
-						if($i<>$page)
-						{
-							echo "<span><a id='page_a_link' href='index.php?page=$i'>$i</a></span>";
-						}else{
-							echo "<span id='page_links' style='font-weight: bold;'>$i</span>";
-						}
-					}
-					if($page == $totalPages )
-					{
-						echo "<span id='page_links' style='font-weight: bold;'>Next ></span>";
-					}else{
-						$j = $page + 1;
-						echo "<span><a id='page_a_link' href='index.php?page=$j'>Next</a></span>";
-					}
-				}?>
-			</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<nav aria-label="Page navigation example">
+			  <ul class="pagination">
+			  	<?php if ($page > 1){ ?>
+			    <li class="page-item"><a class="page-link" href="?page=<?php echo ($page-1); ?>">Previous</a></li>
+			  	<?php } ?>
+			    <?php for ($i=1; $i < $total_pages; $i++) { ?>
+			    <li class="page-item"><a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>	
+			    <?php } ?>
+			    <?php if ($page!=$total_pages){ ?>
+			    <li class="page-item"><a class="page-link" href="?page=<?php echo ($page+1); ?>">Next</a></li>
+			    <?php } ?>			  
+			</ul>
+			</nav>
 		</div>
 	</div>
 	
